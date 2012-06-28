@@ -11,11 +11,12 @@ license-file:        LICENSE
 author:              Felix C. Stegerman
 maintainer:          flx@obfusk.net
 -- copyright:
-category:            Math
+category:            Math, Misc
 build-type:          Simple
 cabal-version:       >=1.8
 
 library
-  -- exposed-modules:
+  exposed-modules:     Flx.Euler, Flx.Func, Flx.Misc, Flx.TODO, Flx.List.Comb, Flx.List.Misc, Flx.Math.Comb, Flx.Math.Nums
   -- other-modules:
-  build-depends:       base ==4.5.*
+  build-depends:       base ==4.5.*, memoize ==0.3.*, primes ==0.2.*, data-ordlist ==0.4.*, utility-ht ==0.0.*
+  hs-source-dirs:      src
