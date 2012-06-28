@@ -15,8 +15,12 @@
 --  --                                                            }}}1
 
 module Flx.List.Misc (                                        --  {{{1
-  deleteAt
+  deleteAt, sum', product'
 ) where                                                       --  }}}1
+
+--
+
+import Data.List (foldl')
 
 --
 
@@ -25,5 +29,9 @@ deleteAt n _ | n < 0  = error "Flx.List.Misc.deleteAt: negative index"
 deleteAt 0 (_:xt)     = xt
 deleteAt n (x:xt)     = x : deleteAt (n - 1) xt
 deleteAt _ _          = []
+
+sum', product' :: Num a => [a] -> a
+sum'      = foldl' (+) 0
+product'  = foldl' (*) 1
 
 -- vim: set tw=70 sw=2 sts=2 et fdm=marker :

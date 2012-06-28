@@ -21,14 +21,15 @@ module Flx.Euler (                                            --  {{{1
 --
 
 import Data.Function.Memoize (memoize)
-import Data.List (foldl', nub, subsequences)
+import Data.List (nub, subsequences)
 import Data.Numbers.Primes (isPrime, primeFactors)
+
+import Flx.List.Misc (product')
 
 --
 
 divisors :: Integral a => a -> [a]
-divisors
-  = nub . map (foldl' (*) 1) . init . subsequences . primeFactors
+divisors = nub . map product' . init . subsequences . primeFactors
 
 isPrimeMemo :: Int -> Bool
 isPrimeMemo = memoize isPrime
