@@ -18,12 +18,16 @@
 --  --                                                            }}}1
 
 module Flx.Math.Nums (                                        --  {{{1
-  fibs, nat, polygonal, fromPolygonal, polygonals
+  fibs, nat, isSquare,
+  polygonal, isPolygonal, fromPolygonal, polygonals
 ) where                                                       --  }}}1
 
 --
 
+import Data.Maybe (isJust)
 import Data.Maybe.HT (toMaybe)
+
+import Flx.Func (cps2)
 
 --
 
@@ -37,8 +41,16 @@ nat f g x = let y = round . f $ fromIntegral x in toMaybe (x == g y) y
 
 --
 
+isSquare :: Integral a => a -> Bool
+isSquare x = (round . sqrt $ fromIntegral x)^2 == x
+
+--
+
 polygonal :: Integral a => a -> a -> a
 polygonal s n = ((s - 2)*n^2 - (s - 4)*n) `div` 2
+
+isPolygonal :: Integral a => a -> a -> Bool
+isPolygonal = isJust `cps2` fromPolygonal
 
 fromPolygonal :: Integral a => a -> a -> Maybe a
 fromPolygonal s
