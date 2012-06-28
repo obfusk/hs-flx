@@ -1,6 +1,6 @@
 --  --                                                            {{{1
 --
---  File        : Flx/Misc.hs
+--  File        : Flx/List/Misc.hs
 --  Maintainer  : Felix C. Stegerman <flx@obfusk.net>
 --  Date        : 2012-06-28
 --
@@ -14,13 +14,16 @@
 --
 --  --                                                            }}}1
 
-module Flx.Misc (                                             --  {{{1
-  sub
+module Flx.List.Misc (                                        --  {{{1
+  deleteAt
 ) where                                                       --  }}}1
 
 --
 
-sub :: Integral a => a -> a -> a
-sub = subtract
+deleteAt :: Int -> [a] -> [a]
+deleteAt n _ | n < 0  = error "Flx.List.Misc.deleteAt: negative index"
+deleteAt 0 (_:xt)     = xt
+deleteAt n (x:xt)     = x : deleteAt (n - 1) xt
+deleteAt _ _          = []
 
 -- vim: set tw=70 sw=2 sts=2 et fdm=marker :

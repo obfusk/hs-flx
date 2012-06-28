@@ -23,7 +23,7 @@ module Flx.List.Comb (                                        --  {{{1
 
 --
 
-import Flx.Misc (deleteAt)
+import Flx.List.Misc (deleteAt)
 
 --
 
