@@ -2,7 +2,7 @@
 --
 --  File        : Flx/TODO.hs
 --  Maintainer  : Felix C. Stegerman <flx@obfusk.net>
---  Date        : 2012-06-28
+--  Date        : 2012-06-29
 --
 --  Copyright   : Copyright (C) 2012  Felix C. Stegerman
 --  Licence     : GPLv2
@@ -15,7 +15,7 @@
 --  --                                                            }}}1
 
 module Flx.TODO (                                             --  {{{1
-  cart, diagCart, diagChoose, pairs, pairsWith
+  diagCart, diagChoose
 ) where                                                       --  }}}1
 
 --
@@ -23,11 +23,6 @@ module Flx.TODO (                                             --  {{{1
 import Data.List.Ordered (insertSet, mergeAllBy, unionAllBy)
 
 --
-
-cart :: [[a]] -> [[a]]
-cart []       = error "cart: empty list"
-cart [xs]     = map (:[]) xs
-cart (xs:xss) = let ys = cart xss in concat [ map (x:) ys | x <- xs ]
 
 diagCart :: ([a] -> [a] -> Ordering) -> [[a]] -> [[a]]
 diagCart _ []   = error "diagCart: empty list"
@@ -42,13 +37,5 @@ diagChoose f n xs
       in  unionAllBy (\x y -> compare (f x,x) (f y,y))
           $ map (filter ((== n) . length))
           [ map (insertSet x) ys | x <- xs ]
-
-pairs :: [a] -> [[(a,a)]]
-pairs = pairsWith (,)
-
-pairsWith :: (a -> a -> b) -> [a] -> [[b]]
-pairsWith f []      = []
-pairsWith f [_]     = []
-pairsWith f (x:xt)  = map (f x) xt : pairsWith f xt
 
 -- vim: set tw=70 sw=2 sts=2 et fdm=marker :

@@ -2,7 +2,7 @@
 --
 --  File        : Flx/List/Comb.hs
 --  Maintainer  : Felix C. Stegerman <flx@obfusk.net>
---  Date        : 2012-06-28
+--  Date        : 2012-06-29
 --
 --  Copyright   : Copyright (C) 2012  Felix C. Stegerman
 --  Licence     : GPLv2
@@ -18,7 +18,7 @@
 --  --                                                            }}}1
 
 module Flx.List.Comb (                                        --  {{{1
-  choose, permute
+  choose, permute, pairsTup, pairsLst, pairsWith, cart
 ) where                                                       --  }}}1
 
 --
@@ -36,5 +36,24 @@ permute :: Int -> [a] -> [[a]]
 permute 0 _   = [[]]
 permute k xs  = concat
   [ map (x:) . permute (k-1) $ deleteAt i xs | (i,x) <- zip [0..] xs ]
+
+--
+
+pairsTup :: [a] -> [[(a,a)]]
+pairsTup = pairsWith (,)
+
+pairsLst :: [a] -> [[[a]]]
+pairsLst = pairsWith (\x y -> [x,y])
+
+pairsWith :: (a -> a -> b) -> [a] -> [[b]]
+pairsWith f []      = []
+pairsWith f [_]     = []
+pairsWith f (x:xt)  = map (f x) xt : pairsWith f xt
+
+--
+
+cart :: [[a]] -> [[a]]
+cart []       = [[]]
+cart (xs:xst) = let ys = cart xst in concat [ map (x:) ys | x <- xs ]
 
 -- vim: set tw=70 sw=2 sts=2 et fdm=marker :
