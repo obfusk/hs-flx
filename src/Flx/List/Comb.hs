@@ -18,7 +18,8 @@
 --  --                                                            }}}1
 
 module Flx.List.Comb (                                        --  {{{1
-  choose, permute, pairsTup, pairsLst, pairsWith, cart
+  choose, choose', chooseIf', permute, pairsTup, pairsLst, pairsWith,
+  cart
 ) where                                                       --  }}}1
 
 --
@@ -31,6 +32,19 @@ choose :: Int -> [a] -> [[a]]
 choose k _ | k == 0 = [[]]
 choose _ []         = []
 choose k (x:xt)     = map (x:) (choose (k-1) xt) ++ choose k xt
+
+choose' :: Int -> [a] -> [[[a]]]
+choose' k _ | k == 0  = [[[]]]
+choose' _ []          = []
+choose' k (x:xt)      = concatMap (map (x:)) (choose' (k-1) xt)
+                      : (filter (not . null) $ choose' k xt)
+
+chooseIf' :: ([a] -> Bool) -> Int -> [a] -> [[[a]]]
+chooseIf' _ k _ | k == 0  = [[[]]]
+chooseIf' _ _ []          = []
+chooseIf' p k (x:xt)
+  = concatMap (filter p . map (x:)) (chooseIf' p (k-1) xt)
+  : (filter (not . null) $ chooseIf' p k xt)
 
 permute :: Int -> [a] -> [[a]]
 permute 0 _   = [[]]
