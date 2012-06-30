@@ -19,7 +19,7 @@
 --  --                                                            }}}1
 
 module Flx.Math.Misc (                                        --  {{{1
-  sqrtContFrac, sqrtContConv, convergents, convergents'
+  sqrtContFrac, sqrtContFrac', sqrtContConv, convergents, convergents'
 ) where                                                       --  }}}1
 
 --
@@ -29,8 +29,10 @@ import Data.List (zipWith4)
 --
 
 sqrtContFrac :: Integral a => a -> [a]
-sqrtContFrac s
-    = map (\(_,_,a) -> a) $ iterate next (0,1,a0)
+sqrtContFrac = map (\(_,_,a) -> a) . sqrtContFrac'
+
+sqrtContFrac' :: Integral a => a -> [(a,a,a)]
+sqrtContFrac' s = iterate next (0,1,a0)
   where
     next (m,d,a) = (m',d',a')
       where
